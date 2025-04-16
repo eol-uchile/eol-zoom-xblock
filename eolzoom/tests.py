@@ -1,35 +1,34 @@
 # -*- coding: utf-8 -*-
-
-
-from mock import patch, Mock, PropertyMock
+# Python Standard Libraries
 from collections import namedtuple
-
-import json
+from datetime import datetime as dt, timedelta as timedelta
 import base64
-
-from django.test import TestCase, Client
-from django.urls import reverse
-
-from common.djangoapps.util.testing import UrlResetMixin
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-
-from xmodule.modulestore.tests.factories import CourseFactory
-from common.djangoapps.student.tests.factories import UserFactory, CourseEnrollmentFactory
-from xblock.field_data import DictFieldData
-from common.djangoapps.student.roles import CourseStaffRole
-from opaque_keys.edx.keys import CourseKey, UsageKey
-from django.test.utils import override_settings
-from .eolzoom import EolZoomXBlock
-from django.contrib.auth.models import AnonymousUser
-from six import text_type
-import urllib.parse
-from urllib.parse import parse_qs
-from . import views, youtube_views, utils_youtube, email_tasks
-from .models import EolZoomAuth, EolZoomRegistrant, EolGoogleAuth, EolZoomMappingUserMeet
-from datetime import datetime as dt
-import datetime
+import json
 import logging
+import urllib.parse
+
+# Installed packages (via pip)
+from django.contrib.auth.models import AnonymousUser
+from django.test import Client
+from django.test.utils import override_settings
+from django.urls import reverse
+from mock import patch, Mock, PropertyMock
+from six import text_type
+
+# Edx dependencies
+from common.djangoapps.student.roles import CourseStaffRole
+from common.djangoapps.student.tests.factories import UserFactory, CourseEnrollmentFactory
+from common.djangoapps.util.testing import UrlResetMixin
+from opaque_keys.edx.keys import UsageKey
+from xblock.field_data import DictFieldData
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
+
+# Internal project dependencies
+from . import views, utils_youtube, email_tasks
+from .eolzoom import EolZoomXBlock
+from .models import EolZoomAuth, EolZoomRegistrant, EolGoogleAuth, EolZoomMappingUserMeet
+
 logger = logging.getLogger(__name__)
 
 XBLOCK_RUNTIME_USER_ID = 99
@@ -2297,7 +2296,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test google_is_logged with credentials.expiry is not expired
         """
-        new_expiry = dt.utcnow() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.utcnow() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2336,7 +2335,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test youtube_validate normal process
         """
-        new_expiry = dt.utcnow() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.utcnow()+ timedelta(seconds=3600)
         channel.return_value = {
             'channel': True,
             'livestream': False,
@@ -2388,7 +2387,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test youtube_validate if user dont have channel or live permission
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         channel.return_value = {
             'channel': False,
             'livestream': False,
@@ -2432,7 +2431,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test youtube_validate if credentials.token is wrong
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2463,7 +2462,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test update_livebroadcast normal process
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2499,7 +2498,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test update_livebroadcast if credential is wrong
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2542,7 +2541,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
             'duration': '40',
             'broadcast_id': '09876'
         }
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2590,7 +2589,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test create_livebroadcast normal process
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2659,7 +2658,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
             'duration': '40',
             'restricted_access': 'false'
         }
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2694,7 +2693,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test create_livebroadcast if fail in create live on youtube  
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2725,7 +2724,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test create_livebroadcast if fail update status livestream in zoom meeting 
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",
@@ -2782,7 +2781,7 @@ class TestEolYouTubeAPI(UrlResetMixin, ModuleStoreTestCase):
         """
             Test create_livebroadcast when user have over 21 livebroadcast for one meeting
         """
-        new_expiry = dt.now() + datetime.timedelta(seconds=3600)
+        new_expiry = dt.now() + timedelta(seconds=3600)
         credentials = {
             'token': "this-is-a-token",
             'refresh_token': "1//xEoDL4iW3cxlI7yDbSRFYNG01kVKM2C-259HOF2aQbI",

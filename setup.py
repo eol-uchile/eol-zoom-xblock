@@ -24,7 +24,9 @@ def package_data(pkg, roots):
 
 setup(
     name='eolzoom-xblock',
-    version='0.2',
+    version='1.0.0',
+    author="Oficina EOL UChile",
+    author_email="eol-ing@uchile.cl",
     description='Zoom integration with EOL (OpenEdx)',
     license='AGPL v3',
     packages=[
