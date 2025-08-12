@@ -200,6 +200,7 @@ class EolZoomXBlock(XBlock):
             'url_new_livebroadcast': reverse('url_new_livebroadcast'),
             'url_update_livebroadcast': reverse('url_update_livebroadcast'),
             'url_update_meeting': reverse('update_scheduled_meeting'),
+            'enable_youtube_livestreaming': DJANGO_SETTINGS.ENABLE_YOUTUBE_LIVESTREAMING,
         }
         frag.initialize_js('EolZoomStudioXBlock', json_args=settings)
         return frag 
@@ -281,6 +282,7 @@ class EolZoomXBlock(XBlock):
                 self.xmodule_runtime,
                 'user_is_staff',
                 False),
+            'enable_youtube_livestreaming': DJANGO_SETTINGS.ENABLE_YOUTUBE_LIVESTREAMING,
         }
 
     def render_template(self, template_path, context):

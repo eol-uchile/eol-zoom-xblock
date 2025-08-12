@@ -56,6 +56,7 @@
       </div>
       <span class="tip setting-help">Duración de la videollamada (en minutos)</span>
     </li>
+    {% if enable_youtube_livestreaming %}
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="google_access">Youtube Livestream</label>
@@ -78,6 +79,7 @@
         <input hidden name="youtube_logged" type="text" value="0">
       </span>
     </li>
+    {% endif %}
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="restricted_access">Acceso Restringido</label>

@@ -38,6 +38,12 @@ To enable [Youtube API](https://developers.google.com/youtube/v3/guides/auth/ser
     GOOGLE_JAVASCRIPT_ORIGINS = AUTH_TOKENS.get('GOOGLE_JAVASCRIPT_ORIGINS', [])
     EOLZOOM_YOUTUBE_TIMEZONE = AUTH_TOKENS.get('EOLZOOM_YOUTUBE_TIMEZONE', '')
 
+# Enable/Disable Youtube Livestreams
+
+Youtube livestreams are enabled by default, but they can be disabled by setting the variable ENABLE_YOUTUBE_LIVESTREAMING to false in lms.yml and cms.yml.
+
+    ENABLE_YOUTUBE_LIVESTREAMING = false
+
 ## TESTS
 **Prepare tests:**
 
