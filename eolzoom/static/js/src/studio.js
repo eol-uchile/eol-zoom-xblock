@@ -17,18 +17,25 @@ function EolZoomStudioXBlock(runtime, element, settings) {
         var email_notification = $(element).find('#email_notification').val();
         restricted_access = restricted_access == '1';
         email_notification = email_notification == '1';
-        var google_access = $(element).find('#google_access').val();
-        var youtube_permission_enabled = $(element).find('input[name=youtube_permission_enabled]').val();
+        if(enable_youtube_livestreaming) {
+            var google_access = $(element).find('#google_access').val();
+            var youtube_permission_enabled = $(element).find('input[name=youtube_permission_enabled]').val();
+        }
+        else {
+            var google_access = 0;
+        }
         google_access = google_access == '1';
         if(display_name == "" || date == "" || time == "" || duration < 0 || duration == "") {
             alert("Datos inválidos. Revisa nuevamente la información ingresada");
             e.preventDefault();
             return;
         }
-        if(youtube_permission_enabled != "1" && google_access) {
+        if(enable_youtube_livestreaming) {
+            if(youtube_permission_enabled != "1" && google_access) {
             alert("Permisos insuficientes con la cuenta de Google o Zoom asociada");
             e.preventDefault();
             return;
+            }
         }
         form_data.append('display_name', display_name);
         form_data.append('description', description);

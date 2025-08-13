@@ -14,3 +14,4 @@ def plugin_settings(settings):
     settings.GOOGLE_REDIRECT_URIS = []
     settings.GOOGLE_JAVASCRIPT_ORIGINS = []
     settings.EOLZOOM_YOUTUBE_TIMEZONE = ''
+    settings.ENABLE_YOUTUBE_LIVESTREAMING = True
