@@ -17,7 +17,7 @@ function EolZoomStudioXBlock(runtime, element, settings) {
         var email_notification = $(element).find('#email_notification').val();
         restricted_access = restricted_access == '1';
         email_notification = email_notification == '1';
-        if(enable_youtube_livestreaming) {
+        if(settings.enable_youtube_livestreaming) {
             var google_access = $(element).find('#google_access').val();
             var youtube_permission_enabled = $(element).find('input[name=youtube_permission_enabled]').val();
         }
@@ -30,7 +30,7 @@ function EolZoomStudioXBlock(runtime, element, settings) {
             e.preventDefault();
             return;
         }
-        if(enable_youtube_livestreaming) {
+        if(settings.enable_youtube_livestreaming) {
             if(youtube_permission_enabled != "1" && google_access) {
             alert("Permisos insuficientes con la cuenta de Google o Zoom asociada");
             e.preventDefault();
