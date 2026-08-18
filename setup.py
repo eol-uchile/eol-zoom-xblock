@@ -38,7 +38,7 @@ setup(
         "google-auth<2.0dev,==1.25.0",
         "google-auth-httplib2==0.0.3",
         "google-auth-oauthlib==0.4.6",
-        "httplib2==v0.22.0"],
+        "httplib2==v0.32.0"],
     entry_points={
         'xblock.v1': [
             'eolzoom = eolzoom:EolZoomXBlock',
